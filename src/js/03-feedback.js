@@ -14,15 +14,28 @@ form.addEventListener('input', throttle(onFormInput, 500));
 function onFormInput(e) {
   formData[e.target.name] = e.target.value;
 
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+  localStorage.setItem(
+    'feedback-form-state',
+    JSON.stringify({
+      ...formData,
+      email: formEmail.value,
+      message: formMessage.value,
+    })
+  );
 }
 
 form.addEventListener('submit', onFormSubmit);
 function onFormSubmit(evt) {
   evt.preventDefault();
-  console.log(formData);
-  localStorage.removeItem('feedback-form-state');
-  evt.currentTarget.reset();
+  if (formData.email && formData.message) {
+    form.reset();
+    localStorage.removeItem('feedback-form-state');
+    console.log(formData);
+    formData.email = '';
+    formData.message = '';
+  } else {
+    alert('Увага! Всі поля форми мають бути заповнені!');
+  }
 }
 
 function populateForm() {
