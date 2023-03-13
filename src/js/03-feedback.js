@@ -27,7 +27,7 @@ function onFormInput(e) {
 form.addEventListener('submit', onFormSubmit);
 function onFormSubmit(evt) {
   evt.preventDefault();
-  if (formData.email && formData.message) {
+  if (formEmail.value && formMessage.value) {
     form.reset();
     localStorage.removeItem('feedback-form-state');
     console.log(formData);
